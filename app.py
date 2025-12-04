@@ -2,18 +2,18 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import xgboost as xgb
-import json
 
-st.title("🏥 Diabetes Readmission Predictor")
-
+st.title("🩺 Diabetes Readmission Predictor")
 st.write("Upload a patient's data below to predict 30-day readmission risk.")
 
-# Load model
-with open("safe_model.json", "r") as f:
-    model_json = json.load(f)
+# Load model once
+@st.cache_resource
+def load_model():
+    model = xgb.XGBClassifier()
+    model.load_model("safe_model.json")  # load directly from file
+    return model
 
-model = xgb.XGBClassifier()
-model.load_model(model_json)
+model = load_model()
 
 uploaded_file = st.file_uploader("Upload patient data CSV", type="csv")
 
