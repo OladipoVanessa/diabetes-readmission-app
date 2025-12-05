@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 # Load Model
 # -------------------------
 @st.cache_resource
-def load_model():
+def load_model(): 
     model = xgb.Booster()
     model.load_model("model/safe_model.json")  # Path inside repo
     return model
